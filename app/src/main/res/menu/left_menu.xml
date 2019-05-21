@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    android:checkableBehavior="single">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_domain_green"
+        android:title="@string/menu_home" />
+    <item
+        android:id="@+id/nav_menu_button"
+        android:icon="@drawable/ic_restaurant_green"
+        android:title="@string/menu_menu"
+        android:visible="true">
+        <menu>
+            <group android:id="@+id/nav_menu"
+                android:visible="false"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_stew"
+                    android:icon="@drawable/ic_stew"
+                    android:title="@string/menu_stew" />
+                <item
+                    android:id="@+id/nav_hot"
+                    android:icon="@drawable/ic_hot"
+                    android:title="@string/menu_hot" />
+                <item
+                    android:id="@+id/nav_cold"
+                    android:icon="@drawable/ic_cold"
+                    android:title="@string/menu_cold" />
+                <item
+                    android:id="@+id/nav_grille"
+                    android:icon="@drawable/ic_grille"
+                    android:title="@string/menu_grille" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/nav_prepared"
+        android:icon="@drawable/ic_restaurant_menu_green"
+        android:title="@string/menu_prepared" />
+    <item
+        android:id="@+id/nav_gallery"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/menu_gallery" />
+    <item
+        android:id="@+id/nav_contacts"
+        android:icon="@drawable/ic_place_green"
+        android:title="@string/menu_contacts" />
+</menu>

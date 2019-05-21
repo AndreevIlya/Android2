@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Home Catering</string>
+    <string name="navigation_drawer_open">Открыть</string>
+    <string name="navigation_drawer_close">Закрыть</string>
+    <string name="nav_header_title">Home Catering</string>
+    <string name="nav_header_subtitle">Современная домашняя кухня</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">настройки</string>
+
+    <string name="menu_home">Главная</string>
+    <string name="menu_gallery">Галерея</string>
+    <string name="menu_menu">Меню</string>
+    <string name="menu_prepared">Готовые предложения</string>
+    <string name="menu_contacts">Контакты</string>
+    <string name="menu_stew">Горячее</string>
+    <string name="menu_hot">Горячие закуски</string>
+    <string name="menu_cold">Холодные закуски</string>
+    <string name="menu_grille">Гриль</string>
+
+    <string name="action_cart">Корзина</string>
+    <string name="action_callback">Обратный звонок</string>
+    <string name="action_share">Поделиться</string>
+</resources>
