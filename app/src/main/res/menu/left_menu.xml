@@ -6,11 +6,11 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_domain_green"
+        android:icon="@drawable/ic_home"
         android:title="@string/menu_home" />
     <item
         android:id="@+id/nav_menu_button"
-        android:icon="@drawable/ic_restaurant_green"
+        android:icon="@drawable/ic_menu"
         android:title="@string/menu_menu"
         android:visible="true">
         <menu>
@@ -38,14 +38,14 @@
     </item>
     <item
         android:id="@+id/nav_prepared"
-        android:icon="@drawable/ic_restaurant_menu_green"
+        android:icon="@drawable/ic_prepared"
         android:title="@string/menu_prepared" />
     <item
         android:id="@+id/nav_gallery"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_gallery"
         android:title="@string/menu_gallery" />
     <item
         android:id="@+id/nav_contacts"
-        android:icon="@drawable/ic_place_green"
+        android:icon="@drawable/ic_contacts"
         android:title="@string/menu_contacts" />
 </menu>

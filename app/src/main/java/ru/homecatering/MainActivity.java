@@ -3,6 +3,7 @@ package ru.homecatering;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +14,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ExpandableListView;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);//Haven't thought if it's needed yet
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,6 +38,49 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+        ExpandableListView expandableListView = findViewById(R.id.expandableListView);
+        final LeftMenuAdapter adapter = new LeftMenuAdapter(this);
+        expandableListView.setAdapter(adapter);
+
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                LeftMenuModel menuItem = adapter.getGroup(groupPosition);
+                String message = "";
+                switch(menuItem.getId()){
+                    case "nav_home" :
+                        message = "Home clicked";
+                        break;
+                    case "nav_menu" :
+                        message = "Menu clicked";
+                        break;
+                    case "nav_gallery" :
+                        message = "Gallery clicked";
+                        break;
+                    case "nav_contacts" :
+                        message = "Contacts clicked";
+                        break;
+
+                }
+                Snackbar.make(v, message, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                return true;
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+
+
+                return false;
+            }
+        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,18 +133,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        //NavigationView navigationView = findViewById(R.id.nav_view);
         switch (id) {
             case R.id.nav_home:
 
                 break;
-            case R.id.nav_menu_button:
-                MenuItem subMenu = navigationView.getMenu().findItem(R.id.nav_menu);
-                if(subMenu.isVisible()){
-                    subMenu.setVisible(false);
-                }else{
-                    subMenu.setVisible(true);
-                }
+            case R.id.nav_menu:
                 break;
             case R.id.nav_prepared:
 
@@ -108,8 +151,10 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

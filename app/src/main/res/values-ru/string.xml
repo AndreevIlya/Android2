@@ -18,7 +18,11 @@
     <string name="menu_cold">Холодные закуски</string>
     <string name="menu_grille">Гриль</string>
 
+    <string name="less">Свернуть</string>
+    <string name="more">Раскрыть</string>
+
     <string name="action_cart">Корзина</string>
     <string name="action_callback">Обратный звонок</string>
     <string name="action_share">Поделиться</string>
+    <string name="action_developer">О разработчике</string>
 </resources>

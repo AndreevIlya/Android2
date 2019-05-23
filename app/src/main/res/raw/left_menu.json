@@ -1,0 +1,53 @@
+[
+  {
+    "id" : "nav_home",
+    "icon" : "ic_home",
+    "text" : "menu_home",
+    "children" : null
+  },
+  {
+    "id" : "nav_menu",
+    "icon" : "ic_menu",
+    "text" : "menu_menu",
+    "children" : [
+      {
+        "id" : "nav_stew",
+        "icon" : "ic_stew",
+        "text" : "menu_stew"
+      },
+      {
+        "id" : "nav_hot",
+        "icon" : "ic_hot",
+        "text" : "menu_hot"
+      },
+      {
+        "id" : "nav_cold",
+        "icon" : "ic_cold",
+        "text" : "menu_cold"
+      },
+      {
+        "id" : "nav_grille",
+        "icon" : "ic_grille",
+        "text" : "menu_grille"
+      }
+    ]
+  },
+  {
+    "id" : "nav_prepared",
+    "icon" : "ic_prepared",
+    "text" : "menu_prepared",
+    "children" : null
+  },
+  {
+    "id" : "nav_gallery",
+    "icon" : "ic_gallery",
+    "text" : "menu_gallery",
+    "children" : null
+  },
+  {
+    "id" : "nav_contacts",
+    "icon" : "ic_contacts",
+    "text" : "menu_contacts",
+    "children" : null
+  }
+]

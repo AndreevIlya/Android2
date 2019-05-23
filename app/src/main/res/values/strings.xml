@@ -17,7 +17,11 @@
     <string name="menu_cold">Cold beverages</string>
     <string name="menu_grille">Grille</string>
 
+    <string name="less">Close</string>
+    <string name="more">Open</string>
+
     <string name="action_cart">Cart</string>
     <string name="action_callback">Callback</string>
     <string name="action_share">Share</string>
+    <string name="action_developer">About developer</string>
 </resources>

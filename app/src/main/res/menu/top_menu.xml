@@ -20,4 +20,10 @@
         android:title="@string/action_share"
         android:icon="@drawable/ic_menu_share"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_developer"
+        android:orderInCategory="400"
+        android:title="@string/action_developer"
+        android:icon="@drawable/ic_developer_board"
+        app:showAsAction="never" />
 </menu>
