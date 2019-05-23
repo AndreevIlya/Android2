@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ExpandableListView expandableListView = findViewById(R.id.expandableListView);
+        final ExpandableListView expandableListView = findViewById(R.id.expandableListView);
         final LeftMenuAdapter adapter = new LeftMenuAdapter(this);
         expandableListView.setAdapter(adapter);
 
@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case "nav_menu" :
                         message = "Menu clicked";
+                        if(expandableListView.isGroupExpanded(groupPosition)){
+                            expandableListView.collapseGroup(groupPosition);
+                        }else{
+                            expandableListView.expandGroup(groupPosition);
+                        }
                         break;
                     case "nav_gallery" :
                         message = "Gallery clicked";

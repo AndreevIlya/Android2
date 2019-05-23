@@ -25,67 +25,64 @@ import java.util.Map;
 class LeftMenuAdapter extends BaseExpandableListAdapter {
     private Activity activity;
     private List<LeftMenuModel> lmHeader = new ArrayList<>();
-    private Map<LeftMenuModel,List<LeftMenuModel>> lmChildren = new HashMap<>();
+    private Map<LeftMenuModel, List<LeftMenuModel>> lmChildren = new HashMap<>();
 
-    LeftMenuAdapter(Activity activity){
+    LeftMenuAdapter(Activity activity) {
         this.activity = activity;
-        try{
+        try {
             InputStream is = activity.getResources().openRawResource(R.raw.left_menu);
             JsonReader reader = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            reader.beginArray();
-            while(reader.hasNext()){
-                reader.beginObject();
-                while(reader.hasNext()){
-                    readOuter(reader);
-                }
-                reader.endObject();
-            }
-            reader.endArray();
+            readOuter(reader);
             is.close();
         } catch (IOException e) {
-            Log.e("JSON_ERROR","Error while reading json.",e);
+            Log.e("JSON_ERROR", "Error while reading json.", e);
         }
     }
 
     private void readOuter(JsonReader reader) throws IOException {
-        String id = "" ,text = "";
-        Drawable drawable = null;
-        List<LeftMenuModel> lmc = null;
-        switch (reader.nextName()){
-            case "id":
-                id = reader.nextString();
-                Log.i("INFO","1");
-                break;
-            case "text":
-                text = activity.getString(activity.getResources().getIdentifier(reader.nextString(),"string",activity.getPackageName()));
-                Log.i("INFO",text);
-                break;
-            case "icon":
-                drawable = activity.getDrawable(activity.getResources().getIdentifier(reader.nextString(),"drawable",activity.getPackageName()));
-                Log.i("INFO","3");
-                break;
-            case "children":
-                if(reader.peek() != JsonToken.NULL){
-                    lmc = readChild(reader);
-                }else{
-                    reader.skipValue();
+        reader.beginArray();
+        while (reader.hasNext()) {
+            String id = "", text = "";
+            Drawable drawable = null;
+            List<LeftMenuModel> lmc = null;
+            reader.beginObject();
+            while (reader.hasNext()) {
+                switch (reader.nextName()) {
+                    case "id":
+                        id = reader.nextString();
+                        break;
+                    case "text":
+                        text = activity.getString(activity.getResources().getIdentifier(reader.nextString(), "string", activity.getPackageName()));
+                        break;
+                    case "icon":
+                        drawable = activity.getDrawable(activity.getResources().getIdentifier(reader.nextString(), "drawable", activity.getPackageName()));
+                        break;
+                    case "children":
+                        if (reader.peek() != JsonToken.NULL) {
+                            lmc = readChild(reader);
+                        } else {
+                            reader.skipValue();
+                        }
+                        break;
                 }
-                Log.i("INFO","4");
-                break;
+            }
+            reader.endObject();
+            LeftMenuModel lmOuter = new LeftMenuModel(text, id, drawable, lmc != null);
+            lmHeader.add(lmOuter);
+            lmChildren.put(lmOuter, lmc);
+            Log.i("INFO",""+lmOuter.hasChildren);
         }
-        LeftMenuModel lmOuter = new LeftMenuModel(text,id,drawable,lmc != null);
-        lmHeader.add(lmOuter);
-        lmChildren.put(lmOuter,lmc);
+        reader.endArray();
     }
 
     private List<LeftMenuModel> readChild(JsonReader reader) throws IOException {
         List<LeftMenuModel> lmc = new ArrayList<>();
-        String id = "" ,text = "";
+        String id = "", text = "";
         Drawable drawable = null;
         reader.beginArray();
-        while(reader.hasNext()){
+        while (reader.hasNext()) {
             reader.beginObject();
-            while(reader.hasNext()) {
+            while (reader.hasNext()) {
                 switch (reader.nextName()) {
                     case "id":
                         id = reader.nextString();
@@ -99,10 +96,10 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
                 }
             }
             reader.endObject();
-            lmc.add(new LeftMenuModel(text,id,drawable,false));
+            lmc.add(new LeftMenuModel(text, id, drawable, false));
         }
         reader.endArray();
-        return  lmc;
+        return lmc;
     }
 
     @Override
@@ -156,11 +153,11 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
         TextView text = convertView.findViewById(R.id.text);
         text.setText(lmm.getText());
 
-        if(lmm.hasChildren){
-            if (isExpanded){
+        if (lmm.hasChildren) {
+            if (isExpanded) {
                 convertView.findViewById(R.id.more).setVisibility(View.INVISIBLE);
                 convertView.findViewById(R.id.less).setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 convertView.findViewById(R.id.more).setVisibility(View.VISIBLE);
                 convertView.findViewById(R.id.less).setVisibility(View.INVISIBLE);
             }
@@ -170,7 +167,7 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        LeftMenuModel lmm = getChild(groupPosition,childPosition);
+        LeftMenuModel lmm = getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.left_menu_item, null);
