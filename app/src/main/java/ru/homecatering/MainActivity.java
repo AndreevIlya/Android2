@@ -80,7 +80,25 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
+                LeftMenuModel menuItem = adapter.getChild(groupPosition,childPosition);
+                String message = "";
+                switch(menuItem.getId()){
+                    case "nav_stew" :
+                        message = "Stew clicked";
+                        break;
+                    case "nav_hot" :
+                        message = "Hot beverages clicked";
+                        break;
+                    case "nav_cold" :
+                        message = "Cold beverages clicked";
+                        break;
+                    case "nav_grille" :
+                        message = "Grille clicked";
+                        break;
 
+                }
+                Snackbar.make(v, message, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
 
                 return false;
             }

@@ -70,7 +70,6 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
             LeftMenuModel lmOuter = new LeftMenuModel(text, id, drawable, lmc != null);
             lmHeader.add(lmOuter);
             lmChildren.put(lmOuter, lmc);
-            Log.i("INFO",""+lmOuter.hasChildren);
         }
         reader.endArray();
     }
