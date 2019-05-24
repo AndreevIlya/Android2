@@ -151,7 +151,6 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
         icon.setContentDescription(lmm.getText());
         TextView text = convertView.findViewById(R.id.text);
         text.setText(lmm.getText());
-
         if (lmm.hasChildren) {
             if (isExpanded) {
                 convertView.findViewById(R.id.more).setVisibility(View.INVISIBLE);
@@ -169,7 +168,7 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
         LeftMenuModel lmm = getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.left_menu_item, null);
+            convertView = inflater.inflate(R.layout.left_menu_item_inner, null);
         }
 
         convertView.setTag(lmm.getId());

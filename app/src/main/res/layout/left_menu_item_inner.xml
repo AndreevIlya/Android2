@@ -8,7 +8,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start">
+        android:gravity="start"
+        android:layout_marginStart="28dp">
 
         <TextView
             android:id="@+id/text"
@@ -19,30 +20,6 @@
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="dsgd trfhuyrtdjt oj" />
-
-        <ImageView
-            android:id="@+id/less"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:contentDescription="@string/less"
-            android:src="@drawable/ic_expand_less"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/text"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageView
-            android:id="@+id/more"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:contentDescription="@string/more"
-            android:src="@drawable/ic_expand_more"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/text"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/icon"
