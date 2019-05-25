@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Home Catering</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="nav_header_title">Home Catering</string>
+    <string name="nav_header_subtitle">Modern home cuisine</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_menu">Menu</string>
+    <string name="menu_prepared">Prepared offers</string>
+    <string name="menu_contacts">Contacts</string>
+    <string name="menu_stew">Hot stew</string>
+    <string name="menu_hot">Hot beverages</string>
+    <string name="menu_cold">Cold beverages</string>
+    <string name="menu_grille">Grille</string>
+
+    <string name="less">Close</string>
+    <string name="more">Open</string>
+
+    <string name="action_cart">Cart</string>
+    <string name="action_callback">Callback</string>
+    <string name="action_share">Share</string>
+    <string name="action_developer">About developer</string>
+</resources>
