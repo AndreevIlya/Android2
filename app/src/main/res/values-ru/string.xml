@@ -25,4 +25,7 @@
     <string name="action_callback">Обратный звонок</string>
     <string name="action_share">Поделиться</string>
     <string name="action_developer">О разработчике</string>
+
+    <string name="temperature_note">Датчик температуры показывает </string>
+    <string name="humidity_note">Датчик влажности показывает </string>
 </resources>
