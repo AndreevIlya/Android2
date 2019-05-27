@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
     private Sensor sensorHumidity;
     private Float temperature;
 
-    SensorEventListener listenerTemperature = new SensorEventListener() {
+    private SensorEventListener listenerTemperature = new SensorEventListener() {
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -76,6 +76,13 @@ public class HomeFragment extends Fragment {
         super.onPause();
         sensorManager.unregisterListener(listenerTemperature, sensorTemperature);
         sensorManager.unregisterListener(listenerHumidity, sensorHumidity);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sensorManager.registerListener(listenerTemperature, sensorTemperature, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(listenerHumidity, sensorHumidity, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
 
