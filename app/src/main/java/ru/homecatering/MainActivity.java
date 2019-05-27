@@ -3,6 +3,8 @@ package ru.homecatering;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +25,10 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ExpandableListView expandableListView;
+    private LeftMenuAdapter adapter;
+    private String activeContent = "home";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +45,26 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        final ExpandableListView expandableListView = findViewById(R.id.expandableListView);
-        final LeftMenuAdapter adapter = new LeftMenuAdapter(this);
+        expandableListView = findViewById(R.id.expandableListView);
+        adapter = new LeftMenuAdapter(this);
         expandableListView.setAdapter(adapter);
+        setListeners();
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment contentFragment = new HomeFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.content,contentFragment);
+        ft.commit();
+    }
+
+    private void setListeners(){
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -52,6 +74,13 @@ public class MainActivity extends AppCompatActivity
                 switch(menuItem.getId()){
                     case "nav_home" :
                         message = "Home clicked";
+                        if(!activeContent.equals("home")){
+                            Fragment contentFragment = new HomeFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "home";
+                        }
                         break;
                     case "nav_menu" :
                         message = "Menu clicked";
@@ -61,11 +90,35 @@ public class MainActivity extends AppCompatActivity
                             expandableListView.expandGroup(groupPosition);
                         }
                         break;
+                    case "nav_prepared" :
+                        message = "Prepared clicked";
+                        if(!activeContent.equals("prepared")){
+                            Fragment contentFragment = new PreparedFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "prepared";
+                        }
+                        break;
                     case "nav_gallery" :
                         message = "Gallery clicked";
+                        if(!activeContent.equals("gallery")){
+                            Fragment contentFragment = new GalleryFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "gallery";
+                        }
                         break;
                     case "nav_contacts" :
                         message = "Contacts clicked";
+                        if(!activeContent.equals("contacts")){
+                            Fragment contentFragment = new ContactsFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "contacts";
+                        }
                         break;
 
                 }
@@ -85,15 +138,43 @@ public class MainActivity extends AppCompatActivity
                 switch(menuItem.getId()){
                     case "nav_stew" :
                         message = "Stew clicked";
+                        if(!activeContent.equals("stew")){
+                            Fragment contentFragment = new StewFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "stew";
+                        }
                         break;
                     case "nav_hot" :
                         message = "Hot beverages clicked";
+                        if(!activeContent.equals("hot")){
+                            Fragment contentFragment = new HotFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "hot";
+                        }
                         break;
                     case "nav_cold" :
                         message = "Cold beverages clicked";
+                        if(!activeContent.equals("cold")){
+                            Fragment contentFragment = new ColdFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "cold";
+                        }
                         break;
                     case "nav_grille" :
                         message = "Grille clicked";
+                        if(!activeContent.equals("grille")){
+                            Fragment contentFragment = new GrilleFragment();
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content,contentFragment);
+                            ft.commit();
+                            activeContent = "grille";
+                        }
                         break;
 
                 }
@@ -104,13 +185,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
