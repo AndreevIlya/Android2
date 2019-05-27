@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
     private List<Sensor> sensors;
     private Sensor sensorTemperature;
     private Sensor sensorHumidity;
+    private Float temperature;
 
     SensorEventListener listenerTemperature = new SensorEventListener() {
 
@@ -96,17 +97,27 @@ public class HomeFragment extends Fragment {
 
     private void showTemperatureSensors(SensorEvent event) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getActivity().getResources().getString(R.string.temperature_note)).append(event.values[0])
+        stringBuilder.append(String.format(getActivity().getResources().getString(R.string.temperature_note), event.values[0]))
                 .append("\n").append("=======================================").append("\n");
-        Log.i("Info", stringBuilder.toString());
+        temperature = event.values[0];
         textTemperature.setText(stringBuilder);
     }
 
     private void showHumiditySensors(SensorEvent event) {
+        float relHum = event.values[0];
+        String humidity;
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getActivity().getResources().getString(R.string.humidity_note)).append(event.values[0])
-                .append("\n").append("=======================================").append("\n");
-        Log.i("Info", stringBuilder.toString());
+        if (temperature != null) {
+            double absHum = 216.7f * (relHum / 100 * 6.112 * Math.exp((17.62f * temperature) / (243.12f + temperature))) / (273.15 + temperature);
+            humidity = Float.toString(Math.round(absHum * 10f) / 10f);
+            stringBuilder.append(String.format(getActivity().getResources().getString(R.string.humidity_abs_note), humidity));
+            Log.i("INFO", "1");
+        } else {
+            humidity = Float.toString(relHum);
+            stringBuilder.append(String.format(getActivity().getResources().getString(R.string.humidity_note), humidity));
+            Log.i("INFO", "2");
+        }
+        stringBuilder.append("\n").append("=======================================").append("\n");
         textHumidity.setText(stringBuilder);
     }
 
