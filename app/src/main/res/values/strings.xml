@@ -24,4 +24,9 @@
     <string name="action_callback">Callback</string>
     <string name="action_share">Share</string>
     <string name="action_developer">About developer</string>
+
+    <string name="temperature_note">Temperature Sensor value is %.1f ℃</string>
+    <string name="humidity_note">Humidity Sensor value is %s \%</string>
+    <string name="humidity_abs_note">Absolute humidity value is %s g/m&#179;</string>
+
 </resources>

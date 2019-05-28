@@ -25,4 +25,8 @@
     <string name="action_callback">Обратный звонок</string>
     <string name="action_share">Поделиться</string>
     <string name="action_developer">О разработчике</string>
+
+    <string name="temperature_note">Датчик температуры показывает %.1f ℃</string>
+    <string name="humidity_note">Датчик влажности показывает %s %%</string>
+    <string name="humidity_abs_note">Абсолютная влажность равна %s г/м&#179;</string>
 </resources>
