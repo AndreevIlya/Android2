@@ -16,12 +16,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ExpandableListView expandableListView;
     private LeftMenuAdapter adapter;
-    private String activeContent = "home";
+    private String activeContent = "";
+    private Map<String, FragmentCreator> fragments = initFragments();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +36,7 @@ public class MainActivity extends AppCompatActivity
         setFAB();
         setDrawer();
 
-        Fragment contentFragment = new HomeFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.content,contentFragment);
-        ft.commit();
+        startFragment("home");
     }
 
     private void setLeftMenu() {
@@ -75,61 +76,16 @@ public class MainActivity extends AppCompatActivity
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
                 LeftMenuModel menuItem = adapter.getGroup(groupPosition);
-                String message = "";
-                switch(menuItem.getId()){
-                    case "nav_home" :
-                        message = "Home clicked";
-                        if(!activeContent.equals("home")){
-                            Fragment contentFragment = new HomeFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "home";
-                        }
-                        break;
-                    case "nav_menu" :
-                        message = "Menu clicked";
-                        if(expandableListView.isGroupExpanded(groupPosition)){
-                            expandableListView.collapseGroup(groupPosition);
-                        }else{
-                            expandableListView.expandGroup(groupPosition);
-                        }
-                        break;
-                    case "nav_prepared" :
-                        message = "Prepared clicked";
-                        if(!activeContent.equals("prepared")){
-                            Fragment contentFragment = new PreparedFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "prepared";
-                        }
-                        break;
-                    case "nav_gallery" :
-                        message = "Gallery clicked";
-                        if(!activeContent.equals("gallery")){
-                            Fragment contentFragment = new GalleryFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "gallery";
-                        }
-                        break;
-                    case "nav_contacts" :
-                        message = "Contacts clicked";
-                        if(!activeContent.equals("contacts")){
-                            Fragment contentFragment = new ContactsFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "contacts";
-                        }
-                        break;
-
+                String itemId = menuItem.getId();
+                if (itemId.equals("nav_menu")) {
+                    if (expandableListView.isGroupExpanded(groupPosition)) {
+                        expandableListView.collapseGroup(groupPosition);
+                    } else {
+                        expandableListView.expandGroup(groupPosition);
+                    }
+                    return true;
                 }
-                Snackbar.make(v, message, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                startFragment(itemId.substring(4));
                 return true;
             }
         });
@@ -139,53 +95,7 @@ public class MainActivity extends AppCompatActivity
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
                 LeftMenuModel menuItem = adapter.getChild(groupPosition,childPosition);
-                String message = "";
-                switch(menuItem.getId()){
-                    case "nav_stew" :
-                        message = "Stew clicked";
-                        if(!activeContent.equals("stew")){
-                            Fragment contentFragment = new StewFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "stew";
-                        }
-                        break;
-                    case "nav_hot" :
-                        message = "Hot beverages clicked";
-                        if(!activeContent.equals("hot")){
-                            Fragment contentFragment = new HotFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "hot";
-                        }
-                        break;
-                    case "nav_cold" :
-                        message = "Cold beverages clicked";
-                        if(!activeContent.equals("cold")){
-                            Fragment contentFragment = new ColdFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "cold";
-                        }
-                        break;
-                    case "nav_grille" :
-                        message = "Grille clicked";
-                        if(!activeContent.equals("grille")){
-                            Fragment contentFragment = new GrilleFragment();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content,contentFragment);
-                            ft.commit();
-                            activeContent = "grille";
-                        }
-                        break;
-
-                }
-                Snackbar.make(v, message, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                startFragment(menuItem.getId().substring(4));
                 return false;
             }
         });
@@ -204,7 +114,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_menu, menu);
         return true;
     }
@@ -233,30 +142,75 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        //NavigationView navigationView = findViewById(R.id.nav_view);
-        switch (id) {
-            case R.id.nav_home:
-
-                break;
-            case R.id.nav_menu:
-                break;
-            case R.id.nav_prepared:
-
-                break;
-            case R.id.nav_gallery:
-
-                break;
-            case R.id.nav_contacts:
-
-                break;
-        }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private interface FragmentCreator {
+        Fragment createFragment();
+    }
 
+    private Map<String, FragmentCreator> initFragments() {
+        fragments = new HashMap<>();
+        fragments.put("home", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new HomeFragment();
+            }
+        });
+        fragments.put("prepared", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new PreparedFragment();
+            }
+        });
+        fragments.put("gallery", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new GalleryFragment();
+            }
+        });
+        fragments.put("contacts", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new ContactsFragment();
+            }
+        });
+        fragments.put("stew", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new StewFragment();
+            }
+        });
+        fragments.put("hot", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new HotFragment();
+            }
+        });
+        fragments.put("cold", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new ColdFragment();
+            }
+        });
+        fragments.put("grille", new FragmentCreator() {
+            @Override
+            public Fragment createFragment() {
+                return new GrilleFragment();
+            }
+        });
+        return fragments;
+    }
+
+    private void startFragment(String name) {
+        if (!activeContent.equals(name)) {
+            Fragment fragment = fragments.get(name).createFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content, fragment);
+            ft.commit();
+            activeContent = name;
+        }
+    }
 }
