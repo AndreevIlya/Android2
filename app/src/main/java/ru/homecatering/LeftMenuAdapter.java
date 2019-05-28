@@ -82,6 +82,9 @@ class LeftMenuAdapter extends BaseExpandableListAdapter {
                 convertView.findViewById(R.id.more).setVisibility(View.VISIBLE);
                 convertView.findViewById(R.id.less).setVisibility(View.INVISIBLE);
             }
+        } else {
+            convertView.findViewById(R.id.more).setVisibility(View.INVISIBLE);
+            convertView.findViewById(R.id.less).setVisibility(View.INVISIBLE);
         }
         return convertView;
     }
