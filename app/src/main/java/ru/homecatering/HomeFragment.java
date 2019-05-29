@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static android.app.Activity.RESULT_OK;
-
 public class HomeFragment extends Fragment {
 
     private TextView result;
@@ -41,9 +39,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i("INFO", "resultCode" + resultCode);
-        if (resultCode == RESULT_OK) {
-            Log.i("INFO", data.getParcelableExtra("answer").toString());
-            String str = data.getParcelableExtra("answer").toString();
+        if (resultCode == 0) {
+            Log.i("INFO", data.getStringExtra("answer"));
+            String str = data.getStringExtra("answer");
             result.setText(str);
         } else {
             result.setText("smth wrong");

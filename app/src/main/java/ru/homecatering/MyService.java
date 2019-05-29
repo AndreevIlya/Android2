@@ -9,18 +9,25 @@ import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class MyService extends Service {
+
+    private PendingIntent pendingIntent;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         ExecutorService exec = Executors.newSingleThreadExecutor();
-        final Intent intentF = intent;
+        pendingIntent = intent.getParcelableExtra("home");
         exec.submit(new Runnable() {
             @Override
             public void run() {
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    Log.e("ERROR", "Exception in HomeFragment", e);
+                }
                 Log.i("INFO", "started");
-                PendingIntent pendingIntent = intentF.getParcelableExtra("home");
                 Intent intentResult = new Intent();
                 intentResult.putExtra("answer", "Service produced a result!");
                 try {
@@ -29,6 +36,7 @@ public class MyService extends Service {
                 } catch (PendingIntent.CanceledException e) {
                     e.printStackTrace();
                 }
+                Log.i("INFO", "stopped");
                 stopSelf();
             }
         });
