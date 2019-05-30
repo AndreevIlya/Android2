@@ -1,6 +1,8 @@
 package ru.homecatering;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -37,6 +39,13 @@ public class MainActivity extends AppCompatActivity
         setDrawer();
 
         startFragment("home");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 0) {
+            getSupportFragmentManager().findFragmentByTag("home").onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void setLeftMenu() {
@@ -208,7 +217,7 @@ public class MainActivity extends AppCompatActivity
         if (!activeContent.equals(name)) {
             Fragment fragment = fragments.get(name).createFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content, fragment);
+            ft.replace(R.id.content, fragment, name);
             ft.commit();
             activeContent = name;
         }
