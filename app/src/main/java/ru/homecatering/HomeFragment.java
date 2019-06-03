@@ -1,7 +1,6 @@
 package ru.homecatering;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,21 +16,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String city = pref.getString("city", "No city");
-        text.setText(city);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.remove("city");
-        editor.apply();
+        text.setText(getActivity().getPreferences(Context.MODE_PRIVATE).getString("city", "No city"));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("city", "Moscow");
-        editor.apply();
+        getActivity().getPreferences(Context.MODE_PRIVATE).edit().putString("city", "Moscow").apply();
     }
 
     @Override
