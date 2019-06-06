@@ -1,18 +1,18 @@
 package ru.homecatering;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.PopupWindow;
 
 public class StewFragment extends Fragment {
     private ProductAdapter adapter;
@@ -26,6 +26,7 @@ public class StewFragment extends Fragment {
         View content = inflater.inflate(R.layout.stew_fragment, container, false);
         initSource();
         initProducts(content);
+        initAddToDB(content);
         return content;
     }
 
@@ -49,26 +50,32 @@ public class StewFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+                Log.i("INFO", "clicked");
                 showPopUpMenu(content);
             }
         });
     }
 
     private void showPopUpMenu(View content) {
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View popupContent = inflater.inflate(R.layout.popup_window, null, false);
-        PopupWindow popupWindow = new PopupWindow(popupContent, 100, 100, true);
-        popupWindow.showAtLocation(content, Gravity.CENTER, 0, 0);
-        Button button = popupContent.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View alertView = factory.inflate(R.layout.popup_window, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(content.getContext());
+        builder.setView(alertView);
+        builder.setTitle(R.string.add_element_title);
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.add_element, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String name = ((TextInputEditText) popupContent.findViewById(R.id.name)).getText().toString();
-                int price = Integer.parseInt(((TextInputEditText) popupContent.findViewById(R.id.price)).getText().toString());
-                String image = ((TextInputEditText) popupContent.findViewById(R.id.image)).getText().toString();
-                connector.addProduct(name, 4, price, image);
-                productReader.refresh("stew");
+            public void onClick(DialogInterface dialog, int id) {
+                String name = ((TextInputEditText) alertView.findViewById(R.id.name)).getText().toString();
+                int price = Integer.parseInt(((TextInputEditText) alertView.findViewById(R.id.price)).getText().toString());
+                String image = ((TextInputEditText) alertView.findViewById(R.id.image)).getText().toString();
+                if (!name.equals("") && price != 0 && !image.equals("")) {
+                    connector.addProduct(name, 4, price, image);
+                    productReader.refresh("stew");
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
+        builder.show();
     }
 }

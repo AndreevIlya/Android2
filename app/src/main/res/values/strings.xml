@@ -29,5 +29,8 @@
     <string name="enter_name">Enter name</string>
     <string name="enter_price">Enter price</string>
     <string name="enter_image">Enter image path</string>
-    <string name="add_element">Click to add element</string>
+
+    <string name="add_element_title">Add new element</string>
+    <string name="add_element">Add</string>
+    <string name="cancel">Cancel</string>
 </resources>

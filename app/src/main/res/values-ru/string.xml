@@ -31,5 +31,7 @@
     <string name="enter_price">Введите цену</string>
     <string name="enter_image">Введите путь к картинке</string>
 
+    <string name="add_element_title">Добавить новый элемент</string>
     <string name="add_element">Добавить</string>
+    <string name="cancel">Отмена</string>
 </resources>
