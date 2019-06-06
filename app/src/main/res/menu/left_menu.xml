@@ -7,11 +7,11 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/menu_home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/nav_menu_button"
         android:icon="@drawable/ic_menu"
-        android:title="@string/menu_menu"
+        android:title="@string/menu"
         android:visible="true">
         <menu>
             <group android:id="@+id/nav_menu"
@@ -20,32 +20,32 @@
                 <item
                     android:id="@+id/nav_stew"
                     android:icon="@drawable/ic_stew"
-                    android:title="@string/menu_stew" />
+                    android:title="@string/stew" />
                 <item
                     android:id="@+id/nav_hot"
                     android:icon="@drawable/ic_hot"
-                    android:title="@string/menu_hot" />
+                    android:title="@string/hot" />
                 <item
                     android:id="@+id/nav_cold"
                     android:icon="@drawable/ic_cold"
-                    android:title="@string/menu_cold" />
+                    android:title="@string/cold" />
                 <item
                     android:id="@+id/nav_grille"
                     android:icon="@drawable/ic_grille"
-                    android:title="@string/menu_grille" />
+                    android:title="@string/grille" />
             </group>
         </menu>
     </item>
     <item
         android:id="@+id/nav_prepared"
         android:icon="@drawable/ic_prepared"
-        android:title="@string/menu_prepared" />
+        android:title="@string/prepared" />
     <item
         android:id="@+id/nav_gallery"
         android:icon="@drawable/ic_gallery"
-        android:title="@string/menu_gallery" />
+        android:title="@string/gallery" />
     <item
         android:id="@+id/nav_contacts"
         android:icon="@drawable/ic_contacts"
-        android:title="@string/menu_contacts" />
+        android:title="@string/contacts" />
 </menu>

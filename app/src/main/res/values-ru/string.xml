@@ -8,15 +8,15 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">настройки</string>
 
-    <string name="menu_home">Главная</string>
-    <string name="menu_gallery">Галерея</string>
-    <string name="menu_menu">Меню</string>
-    <string name="menu_prepared">Готовые предложения</string>
-    <string name="menu_contacts">Контакты</string>
-    <string name="menu_stew">Горячее</string>
-    <string name="menu_hot">Горячие закуски</string>
-    <string name="menu_cold">Холодные закуски</string>
-    <string name="menu_grille">Гриль</string>
+    <string name="home">Главная</string>
+    <string name="gallery">Галерея</string>
+    <string name="menu">Меню</string>
+    <string name="prepared">Готовые предложения</string>
+    <string name="contacts">Контакты</string>
+    <string name="stew">Горячее</string>
+    <string name="hot">Горячие закуски</string>
+    <string name="cold">Холодные закуски</string>
+    <string name="grille">Гриль</string>
 
     <string name="less">Свернуть</string>
     <string name="more">Раскрыть</string>
@@ -25,4 +25,11 @@
     <string name="action_callback">Обратный звонок</string>
     <string name="action_share">Поделиться</string>
     <string name="action_developer">О разработчике</string>
+
+    <string name="rub">&#8381;</string>
+    <string name="enter_name">Введите название</string>
+    <string name="enter_price">Введите цену</string>
+    <string name="enter_image">Введите путь к картинке</string>
+
+    <string name="add_element">Добавить</string>
 </resources>
