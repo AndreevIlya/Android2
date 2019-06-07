@@ -2,6 +2,7 @@ package ru.homecatering;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +11,19 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private ProductDBReader productDBReader;
 
     ProductAdapter(ProductDBReader productDBReader) {
+        Log.i("INFO", "Adapter created");
         this.productDBReader = productDBReader;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.product_card, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -31,16 +35,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public int getItemCount() {
+        Log.i("INFO", "adapter item count" + productDBReader.getCount());
         return productDBReader.getCount();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView title;
-        TextView price;
+        private ImageView image;
+        private TextView title;
+        private TextView price;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            Log.i("INFO", "VH created");
             image = itemView.findViewById(R.id.product_image);
             title = itemView.findViewById(R.id.product_title);
             price = itemView.findViewById(R.id.product_price);
@@ -48,8 +54,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         void bind(Product product) {
             title.setText(product.getName());
-            price.setText(product.getPrice());
+            Log.i("INFO", "VH bound");
+            price.setText(String.format(Locale.getDefault(), "%d", product.getPrice()));
+            Log.i("INFO", "VH bound");
             Picasso.get().load(product.getImage()).into(image);
+            Log.i("INFO", "VH bound");
         }
     }
 }

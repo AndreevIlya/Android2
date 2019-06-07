@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Objects;
+
 public class StewFragment extends Fragment {
     private ProductAdapter adapter;
     private ProductDBConnector connector;
@@ -30,16 +32,30 @@ public class StewFragment extends Fragment {
         return content;
     }
 
-    private void initSource() {
-        this.connector = new ProductDBConnector(getActivity().getApplicationContext());
+    @Override
+    public void onPause() {
+        super.onPause();
+        connector.close();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         connector.open("stew");
-        this.productReader = connector.getProductDBReader();
+    }
+
+    private void initSource() {
+        connector = new ProductDBConnector(Objects.requireNonNull(getActivity()).getApplicationContext());
+        connector.open("stew");
+        productReader = connector.getProductDBReader();
     }
 
     private void initProducts(View content) {
+        Log.i("INFO", "RC started");
         RecyclerView recycler = content.findViewById(R.id.products_wrapper);
         GridLayoutManager grid = new GridLayoutManager(getActivity(), 2);
         recycler.setLayoutManager(grid);
+        recycler.setHasFixedSize(true);
         adapter = new ProductAdapter(productReader);
         recycler.setAdapter(adapter);
     }
@@ -70,7 +86,7 @@ public class StewFragment extends Fragment {
                 int price = Integer.parseInt(((TextInputEditText) alertView.findViewById(R.id.price)).getText().toString());
                 String image = ((TextInputEditText) alertView.findViewById(R.id.image)).getText().toString();
                 if (!name.equals("") && price != 0 && !image.equals("")) {
-                    connector.addProduct(name, 4, price, image);
+                    connector.addProduct(name, 5, price, image);
                     productReader.refresh("stew");
                     adapter.notifyDataSetChanged();
                 }

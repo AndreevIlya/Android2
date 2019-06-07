@@ -2,6 +2,7 @@ package ru.homecatering;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.Closeable;
 
@@ -24,7 +25,7 @@ public class ProductDBReader implements Closeable {
         cursor.close();
     }
 
-    public void refresh(String where) {
+    void refresh(String where) {
         int position = cursor.getPosition();
         if (where.equals("all")) queryAll();
         else queryByParent(where);
@@ -38,8 +39,10 @@ public class ProductDBReader implements Closeable {
     private void queryByParent(String where) {
         String query = "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCTS +
                 " INNER JOIN content ON  " + DataBaseHelper.TABLE_PRODUCTS + ".parent =  " + DataBaseHelper.TABLE_CONTENT +
-                ".id WHERE  " + DataBaseHelper.TABLE_CONTENT + ".name = \'" + where + "\'";
-        cursor = database.rawQuery(query, null);
+                ".id WHERE  " + DataBaseHelper.TABLE_CONTENT + ".name = ?";
+        Log.i("INFO", query);
+        String[] args = {where};
+        cursor = database.rawQuery(query, args);
     }
 
     Product getPosition(int position) {

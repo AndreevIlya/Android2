@@ -4,6 +4,7 @@ package ru.homecatering;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.Closeable;
 
@@ -55,6 +56,7 @@ public class ProductDBConnector implements Closeable {
     }
 
     ProductDBReader getProductDBReader() {
+        Log.i("INFO", "Got product reader");
         return productDBReader;
     }
 
