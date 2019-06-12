@@ -47,12 +47,7 @@ public class MainActivity extends AppCompatActivity
         initToken();
 
         startFragment("home");
-
-
     }
-
-
-
 
     private void initToken() {
         FirebaseInstanceId.getInstance().getInstanceId()
