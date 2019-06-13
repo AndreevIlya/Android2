@@ -28,4 +28,5 @@
     <string name="out_of_geo">Unfortunately, you are out of our service area. Consult to our representative.</string>
     <string name="within_big_geo">You are far from us, so we ask you to inform us about your offer the earlier the better. Delivery to be paid separately.</string>
     <string name="within_small_geo">You are near us, so delivery is not to be paid.</string>
+    <string name="map_api_key">AIzaSyCXzevHrnhsYCIHFbAw34kwrTP76qqyCYs</string>
 </resources>

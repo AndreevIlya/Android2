@@ -30,11 +30,17 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import static android.content.Context.LOCATION_SERVICE;
 
 public class ContactsFragment extends Fragment
-        implements ActivityCompat.OnRequestPermissionsResultCallback {
+        implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback {
 
     private LocationListener listener = initLocationListener();
     private LocationManager locationManager;
@@ -42,10 +48,15 @@ public class ContactsFragment extends Fragment
     private Geofence geoFenceSmall;
     private Geofence geoFenceBig;
     private GoogleApiClient.ConnectionCallbacks connectionCallBack = initConnectionCallback();
+    private GoogleMap map;
+    private LatLng myLocation;
+    private MarkerOptions myMarker = null;
     private static final int PERMISSION_REQUEST_CODE = 26;
     private String provider;
-    private static final double MY_LATITUDE = 55.94221769;
-    private static final double MY_LONGITUDE = 37.61245531;
+    private static final double HOME_LATITUDE = 55.94221769;
+    private static final double HOME_LONGITUDE = 37.61245531;
+    private LatLng homeLocation = new LatLng(HOME_LATITUDE, HOME_LONGITUDE);
+    private MarkerOptions homeMarker = initHomeMarker();
     private static final float RADIUS_SMALL = 20000;
     private static final float RADIUS_BIG = 100000;
 
@@ -54,13 +65,15 @@ public class ContactsFragment extends Fragment
     private TextView geoInfo;
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getLocation();
         View content = inflater.inflate(R.layout.contacts_fragment, container, false);
         geoInfo = content.findViewById(R.id.geo_info);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         IntentFilter geoFilter = new IntentFilter("ru.homecatering.geo");
         getActivity().registerReceiver(broadcastReceiver, geoFilter);
@@ -101,14 +114,14 @@ public class ContactsFragment extends Fragment
         geoFenceSmall = new Geofence.Builder()
                 .setRequestId("small")
                 .setTransitionTypes(GeofencingRequest.INITIAL_TRIGGER_ENTER | GeofencingRequest.INITIAL_TRIGGER_EXIT | GeofencingRequest.INITIAL_TRIGGER_DWELL)
-                .setCircularRegion(MY_LATITUDE, MY_LONGITUDE, RADIUS_SMALL)
+                .setCircularRegion(HOME_LATITUDE, HOME_LONGITUDE, RADIUS_SMALL)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setLoiteringDelay(100)
                 .build();
         geoFenceBig = new Geofence.Builder()
                 .setRequestId("big")
                 .setTransitionTypes(GeofencingRequest.INITIAL_TRIGGER_ENTER | GeofencingRequest.INITIAL_TRIGGER_EXIT | GeofencingRequest.INITIAL_TRIGGER_DWELL)
-                .setCircularRegion(MY_LATITUDE, MY_LONGITUDE, RADIUS_BIG)
+                .setCircularRegion(HOME_LATITUDE, HOME_LONGITUDE, RADIUS_BIG)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setLoiteringDelay(100)
                 .build();
@@ -204,12 +217,13 @@ public class ContactsFragment extends Fragment
         return new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                String latitude = Double.toString(location.getLatitude());
-                String longitude = Double.toString(location.getLongitude());
-                String accuracy = Float.toString(location.getAccuracy());
-                Log.i("GEO", latitude);
-                Log.i("GEO", longitude);
-                Log.i("GEO", accuracy);
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                float accuracy = location.getAccuracy();
+                Log.i("GEO", latitude + "");
+                Log.i("GEO", longitude + "");
+                Log.i("GEO", accuracy + "");
+                myLocation = new LatLng(latitude, longitude);
             }
 
             @Override
@@ -224,5 +238,31 @@ public class ContactsFragment extends Fragment
             public void onProviderDisabled(String provider) {
             }
         };
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.setMyLocationEnabled(true);
+        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                map.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+                return true;
+            }
+        });
+        if (myMarker == null) {
+            myMarker = new MarkerOptions().visible(false).icon(null).position(homeLocation);
+            map.addMarker(myMarker);
+        } else {
+            myMarker.position(myLocation);
+        }
+        map.addMarker(homeMarker);
+        map.moveCamera(CameraUpdateFactory.newLatLng(homeLocation));
+    }
+
+    private MarkerOptions initHomeMarker() {
+        return new MarkerOptions().visible(true).icon(null).position(homeLocation);
     }
 }
