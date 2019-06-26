@@ -15,7 +15,6 @@ public class FirebasePusher extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-
     }
 
     @Override
