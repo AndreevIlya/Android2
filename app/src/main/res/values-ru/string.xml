@@ -29,4 +29,7 @@
     <string name="out_of_geo">К сожалению, вы находитесь вне зоны нашего обслуживания. Свяжитесь с нашим представителем.</string>
     <string name="within_big_geo">Вы находитесь далеко от нас, просим планировать заказ заранее. Выезд оплачивается отдельно.</string>
     <string name="within_small_geo">Вы находитесь недалеко от нас. Доставка бесплатна.</string>
+
+    <string name="until_friday">До пятницы %d д. %d ч.</string>
+    <string name="friday">Сегодня пятница!</string>
 </resources>

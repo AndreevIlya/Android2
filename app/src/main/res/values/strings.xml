@@ -29,4 +29,7 @@
     <string name="within_big_geo">You are far from us, so we ask you to inform us about your offer the earlier the better. Delivery to be paid separately.</string>
     <string name="within_small_geo">You are near us, so delivery is not to be paid.</string>
 
+    <string name="until_friday">Until friday %d d. %d h.</string>
+    <string name="friday">Today it\'s friday!</string>
+
 </resources>
