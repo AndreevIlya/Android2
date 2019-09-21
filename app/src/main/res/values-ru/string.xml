@@ -31,5 +31,6 @@
     <string name="within_small_geo">Вы находитесь недалеко от нас. Доставка бесплатна.</string>
 
     <string name="until_friday">До пятницы %d д. %d ч.</string>
+    <string name="until_friday_hours">До пятницы %d ч.</string>
     <string name="friday">Сегодня пятница!</string>
 </resources>

@@ -53,7 +53,11 @@ public class FridayWidget extends AppWidgetProvider {
             for (int i = 1; ; i++) {
                 dateToday.add(Calendar.DAY_OF_WEEK, 1);
                 if (dateToday.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-                    time = String.format(context.getString(R.string.until_friday), i, hourToFriday);
+                    if (i == 1) {
+                        time = String.format(context.getString(R.string.until_friday_hours), hourToFriday);
+                    } else {
+                        time = String.format(context.getString(R.string.until_friday), i - 1, hourToFriday);
+                    }
                     break;
                 }
             }

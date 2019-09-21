@@ -30,6 +30,7 @@
     <string name="within_small_geo">You are near us, so delivery is not to be paid.</string>
 
     <string name="until_friday">Until friday %d d. %d h.</string>
+    <string name="until_friday_hours">Until friday %d h.</string>
     <string name="friday">Today it\'s friday!</string>
 
 </resources>
